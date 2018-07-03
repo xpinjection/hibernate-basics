@@ -8,10 +8,6 @@ import com.jeeconf.hibernate.basics.entity.Report;
 import org.junit.Test;
 import org.springframework.test.annotation.Commit;
 
-/**
- * Created by Igor Dmitriev / Mikalai Alimenkou on 4/29/16
- */
-
 @DatabaseSetup("/data.xml")
 public class FlushTest extends BaseTest {
 
@@ -19,17 +15,17 @@ public class FlushTest extends BaseTest {
     @Commit
     public void showSpecificExecutionOrder() {
         // 1. select client
-        Client client = getSession().get(Client.class, 10);
+        Client client = session.get(Client.class, 100);
         // 2. select account
         Account account = client.getAccounts().get(0);
         // 3. delete account
-        getSession().delete(account);
+        session.delete(account);
         // 4. update client
         client.setName("Elvis");
         // 5. insert new report
         Report report = new Report();
         report.setDescription("Client has been updated; Account has been removed");
-        getSession().persist(report);
+        session.persist(report);
     }
 
     @Test
@@ -37,17 +33,16 @@ public class FlushTest extends BaseTest {
     public void showFlushNativeSelect() {
         Client client = new Client();
         client.setName("Bob");
-        getSession().persist(client);
+        session.persist(client);
         String sql = "select c.id_client,c.name,c.age from Client c";
-        getSession().createSQLQuery(sql).list();
+        session.createNativeQuery(sql).list();
         //em.createNativeQuery(sql).getResultList();
     }
 
     @Test
     @Commit
     public void updateAllFields() {
-        Client client = getSession().get(Client.class, 10);
+        Client client = session.get(Client.class, 100);
         client.setAge(30);
     }
-
 }
