@@ -2,6 +2,7 @@ package com.jeeconf.hibernate.basics.nplusone;
 
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.jeeconf.hibernate.basics.BaseTest;
+import com.jeeconf.hibernate.basics.entity.Account;
 import com.jeeconf.hibernate.basics.entity.Client;
 import org.junit.Test;
 import org.springframework.test.annotation.Commit;
@@ -22,8 +23,12 @@ public class NplusOneTest extends BaseTest {
     public void extraLazy() {
         // add @LazyCollection(LazyCollectionOption.EXTRA) to Client accounts
         Client client = session.get(Client.class, 100);
-        client.getAccounts().size();
-        client.getAccounts().get(0);
+        List<Account> accounts = client.getAccounts();
+        System.out.println("<- got accounts");
+        accounts.size();
+        System.out.println("<- got size");
+        accounts.get(0);
+        System.out.println("<- got element");
     }
 
     @Test

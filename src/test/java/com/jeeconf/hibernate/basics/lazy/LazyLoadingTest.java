@@ -6,6 +6,8 @@ import com.jeeconf.hibernate.basics.entity.Account;
 import com.jeeconf.hibernate.basics.entity.Client;
 import org.junit.Test;
 
+import java.util.List;
+
 @DatabaseSetup("/data.xml")
 public class LazyLoadingTest extends BaseTest {
 
@@ -13,9 +15,9 @@ public class LazyLoadingTest extends BaseTest {
     public void lazyCollection() {
         Client client = session.get(Client.class, 100);
         System.out.println("<- got client");
-        client.getAccounts();
+        List<Account> accounts = client.getAccounts();
         System.out.println("<- got accounts");
-        client.getAccounts().size();
+        accounts.size();
         System.out.println("<- got accounts size");
     }
 
@@ -23,9 +25,9 @@ public class LazyLoadingTest extends BaseTest {
     public void lazyEntity() {
         Account account = session.get(Account.class, 10);
         System.out.println("<- got account");
-        account.getClient();
+        Client client = account.getClient();
         System.out.println("<- got client");
-        account.getClient().getId();
+        client.getId();
         System.out.println("<- got client id");
     }
 

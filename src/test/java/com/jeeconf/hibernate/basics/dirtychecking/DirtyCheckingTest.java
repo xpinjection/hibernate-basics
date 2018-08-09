@@ -28,7 +28,7 @@ public class DirtyCheckingTest extends BaseTest {
         // add @Immutable to Client
         Client client = session.get(Client.class, 100);
         // for queries it is also possible
-        // getSession().createQuery("select c from Client c").setReadOnly(true).list();
+        //session.createQuery("select c from Client c").setReadOnly(true).list();
     }
 
     @Test
