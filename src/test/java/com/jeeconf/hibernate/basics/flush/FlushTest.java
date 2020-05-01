@@ -42,6 +42,7 @@ public class FlushTest extends BaseTest {
     @Test
     @Commit
     public void updateAllFields() {
+        //add @DynamicUpdate to Client
         Client client = session.get(Client.class, 100);
         client.setAge(30);
     }
